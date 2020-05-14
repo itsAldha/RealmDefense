@@ -7,12 +7,75 @@ public class PathFinder : MonoBehaviour
 {
     [SerializeField] Waypoint startWaypoint, endWaypoint;
     Dictionary<Vector3, Waypoint> grid = new Dictionary<Vector3, Waypoint>();
+    Vector3[] directions = { new Vector3(0, 0, 1), new Vector3(1, 0, 0), new Vector3(0, 0, -1), new Vector3(-1, 0, 0) };
+    Queue<Waypoint> queue = new Queue<Waypoint>();
+    bool isRunning = true;
+    List<Waypoint> path = new List<Waypoint>();
 
-    // Start is called before the first frame update
-    void Start()
+
+    public List<Waypoint> GetPath()
     {
         LoadBlocks();
         ColorStartAndEnd();
+        BreadthFirstSearch();
+        CreatePath();
+        return path;
+    }
+
+    private void CreatePath()
+    {
+        path.Add(endWaypoint);
+        Waypoint previous = endWaypoint.exploredFrom;
+        
+        while(previous != startWaypoint)
+        {
+            path.Add(previous);
+            previous = previous.exploredFrom;
+        }
+        path.Add(previous);
+        path.Reverse();
+        foreach (Waypoint x in path)
+            print(x);
+    }
+
+    private void BreadthFirstSearch()
+    {
+        queue.Enqueue(startWaypoint);
+
+        while(queue.Count > 0 && isRunning)
+        {
+            var searchCenter = queue.Dequeue();
+            searchCenter.isExplored = true;
+            print("Searching from " + searchCenter);
+
+            if(searchCenter == endWaypoint)
+            {
+                print("found it!");
+                isRunning = false;
+                break;
+            }
+
+            ExploreNeighbors(searchCenter);
+        }
+    }
+
+    private void ExploreNeighbors(Waypoint from)
+    {
+        if (!isRunning) return;
+        print("Exploring neights for " + from);
+        foreach (Vector3 direction in directions)
+        {
+            Vector3 neighborCoordinates = from.GetGridPos() + direction;
+            if(grid.ContainsKey(neighborCoordinates))
+            {
+                Waypoint neighbor = grid[neighborCoordinates];
+                if (neighbor.isExplored || queue.Contains(neighbor) )
+                    continue;
+                queue.Enqueue(neighbor);
+                print("Queueing " + neighbor);
+                neighbor.exploredFrom = from;
+            }
+        }
     }
 
     private void ColorStartAndEnd()
