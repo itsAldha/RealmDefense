@@ -20,15 +20,15 @@ public class Waypoint : MonoBehaviour
 
     public Vector3 GetGridPos()
     {
-        gridPos.x = Mathf.Round(transform.position.x / gridSize) * gridSize;
+        gridPos.x = Mathf.Round(transform.position.x / gridSize);
         gridPos.y = 0f;
-        gridPos.z = Mathf.Round(transform.position.z / gridSize) * gridSize;
+        gridPos.z = Mathf.Round(transform.position.z / gridSize);
         return gridPos;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetTopcolor(Color color)
     {
-        
+        MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
+        topMeshRenderer.material.color = color;
     }
 }
