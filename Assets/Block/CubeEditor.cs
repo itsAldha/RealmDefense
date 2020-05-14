@@ -24,7 +24,7 @@ public class CubeEditor : MonoBehaviour
     {
         int gridSize = waypoint.GetGridSize();
         Vector3 gridPos = waypoint.GetGridPos() * gridSize;
-        transform.position = new Vector3(gridPos.x, gridPos.y, gridPos.z);
+        transform.position = new Vector3(gridPos.x, transform.position.y, gridPos.z);
     }
 
     private void UpdateLabel()
