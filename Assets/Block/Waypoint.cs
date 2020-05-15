@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
+    [SerializeField] Tower towerPrefab;
     public bool isExplored = false;
     public Waypoint exploredFrom;
     const int gridSize = 10;
     Vector3 gridPos;
+    public bool isPlaceable = true;
+
+    private void OnMouseOver()
+    {
+        if( Input.GetMouseButtonDown(0) && isPlaceable )
+        {
+            isPlaceable = false;
+            Instantiate(towerPrefab, transform.position, Quaternion.identity);
+        }
+    }
 
     public int GetGridSize()
     {
