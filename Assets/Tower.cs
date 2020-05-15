@@ -7,12 +7,13 @@ using UnityEngine.SocialPlatforms;
 public class Tower : MonoBehaviour
 {
     [SerializeField] Transform objectToPan;
-    [SerializeField] Transform targetEnemy;
     [SerializeField] float attackRange = 20f;
     [SerializeField] ParticleSystem projectileParticle;
-    // Update is called once per frame
+
+    Transform targetEnemy;
     void Update()
     {
+        SetTargetEnemy();
         if(targetEnemy)
         {
             objectToPan.LookAt(targetEnemy);
@@ -20,6 +21,20 @@ public class Tower : MonoBehaviour
         }
         else
             Shoot(false);
+    }
+
+    private void SetTargetEnemy()
+    {
+        var sceneEnemies = FindObjectsOfType<EnemyDamage>();
+        if (sceneEnemies.Length == 0) return;
+
+        Transform closestEnemy = sceneEnemies[0].transform;
+        foreach(EnemyDamage testEnemy in sceneEnemies)
+        {
+            if (Vector3.Distance(testEnemy.transform.position, gameObject.transform.position) < Vector3.Distance(closestEnemy.position,gameObject.transform.position))
+                closestEnemy = testEnemy.transform;
+        }
+        targetEnemy = closestEnemy;
     }
 
     private void FireAtEnemy()
