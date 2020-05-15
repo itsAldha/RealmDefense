@@ -32,6 +32,7 @@ public class PathFinder : MonoBehaviour
         
         while(previous != startWaypoint)
         {
+            previous.isPlaceable = false;
             path.Add(previous);
             previous = previous.exploredFrom;
         }
