@@ -17,7 +17,7 @@ public class EnemyMovement : MonoBehaviour
         {
             transform.position = new Vector3(waypoint.transform.position.x, transform.position.y, waypoint.transform.position.z);
             //var hp = gameObject.GetComponentInChildren<Canvas>();
-            //hp.transform.LookAt(FindObjectOfType<Camera>().transform);
+            //hp.transform.LookAt(GameObject.Find("Main Camera").transform); // or Camera.main.transform
             yield return new WaitForSeconds(0.5f);
         }
     }
