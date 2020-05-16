@@ -16,7 +16,9 @@ public class EnemyMovement : MonoBehaviour
         foreach (Waypoint waypoint in path)
         {
             transform.position = new Vector3(waypoint.transform.position.x, transform.position.y, waypoint.transform.position.z);
-            yield return new WaitForSeconds(1);
+            //var hp = gameObject.GetComponentInChildren<Canvas>();
+            //hp.transform.LookAt(FindObjectOfType<Camera>().transform);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

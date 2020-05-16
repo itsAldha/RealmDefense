@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyDamage : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class EnemyDamage : MonoBehaviour
     private void OnParticleCollision(GameObject other)
     {
         HitPoints -= 1;
+        var slider = gameObject.GetComponentInChildren<Slider>();
+        slider.value = HitPoints;
         if (HitPoints <= 0)
             Destroy(gameObject);
     }
