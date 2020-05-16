@@ -4800,7 +4800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToPan: {fileID: 3088977240459017453}
-  attackRange: 20
+  attackRange: 40
   projectileParticle: {fileID: 616656030}
 --- !u!1001 &1526761554900637378
 PrefabInstance:
